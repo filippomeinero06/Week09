@@ -15,7 +15,7 @@ class View:
     def load_interface(self):
         self.dd_serate = ft.Dropdown(
             label='Numero di serate', width=210,
-            on_change=self.controller.handle_statistiche
+            on_select=self.controller.handle_statistiche
         )
         self.dd_serate.options.append(ft.dropdown.Option(6, 'Sei'))
         self.dd_serate.options.append(ft.dropdown.Option(9, 'Nove'))
@@ -27,8 +27,8 @@ class View:
             ft.Text('Programma del cineclub', size=24, color='blue'),
             ft.Row([
                 self.dd_serate,
-                ft.ElevatedButton('Statistiche per genere', on_click=self.controller.handle_statistiche),
-                ft.ElevatedButton('Programma ottimo', on_click=self.controller.handle_programma),
+                ft.Button('Statistiche per genere', on_click=self.controller.handle_statistiche),
+                ft.Button('Programma ottimo', on_click=self.controller.handle_programma),
             ], alignment=ft.MainAxisAlignment.CENTER),
             self.risultati,
         )
