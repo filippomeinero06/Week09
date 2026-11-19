@@ -14,12 +14,11 @@ class View:
 
     def load_interface(self):
         self.dd_serate = ft.Dropdown(
-            label='Numero di serate', width=210,
-            on_select=self.controller.handle_statistiche
+            label='Numero di serate', width=210
         )
-        self.dd_serate.options.append(ft.dropdown.Option(6, 'Sei'))
-        self.dd_serate.options.append(ft.dropdown.Option(9, 'Nove'))
-        self.dd_serate.options.append(ft.dropdown.Option(12, 'Dodici'))
+        self.dd_serate.options.append(ft.dropdown.Option('6', 'Sei'))
+        self.dd_serate.options.append(ft.dropdown.Option('9', 'Nove'))
+        self.dd_serate.options.append(ft.dropdown.Option('12', 'Dodici'))
 
 
         self.risultati = ft.ListView(expand=1, spacing=8, padding=16)

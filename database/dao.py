@@ -1,5 +1,3 @@
-from oauthlib.common import add_params_to_qs
-
 from database.DB_connect import DBConnect
 from model.film import Film
 
@@ -45,8 +43,6 @@ class Dao:
                     result.append(f"{r['genere']}, {r['numero_film']}, {r['media_voti']}")
                 return result
 
-
-
             finally:
                 cursor.close()
         finally:
@@ -68,8 +64,7 @@ class Dao:
 
                 result = []
                 for r in cursor:
-                    film = Film(r['id'], r['titolo'], r['genere'], r['serata'], r['numero_voti'],
-                                float(r['somma_voti']))
+                    film = Film(r['id'], r['titolo'], r['genere'], r['serata'], r['numero_voti'], float(r['somma_voti']))
                     result.append(film)
                 return result
 

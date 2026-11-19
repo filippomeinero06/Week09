@@ -11,4 +11,4 @@ def main(page: ft.Page):
     view.load_interface()
 
 
-ft.run(main)
+ft.app(target=main)
