@@ -33,9 +33,10 @@ class QuadratoMagico:
         num_righe_sol = len(sol_parziale) // n
         num_colonne_sol = len(sol_parziale) - n*num_righe_sol
 
+        # CORRETTO: le righe già complete hanno n colonne, non num_colonne_sol
         for r in range(0, num_righe_sol):
             somma = 0
-            for c in range(0, num_colonne_sol):
+            for c in range(0, n):
                 somma += sol_parziale[r*n + c]
             if somma != M:
                 return False
@@ -43,25 +44,34 @@ class QuadratoMagico:
         # Idem per colonne e diagonali
 
         # Somme delle colonne
-        for c in range(0, num_colonne_sol):
+        # CORRETTO: controllo tutte le colonne, non solo le prime num_colonne_sol.
+        # Una colonna ha una cella in più se è già stata toccata dalla riga in corso.
+        for c in range(0, n):
+            if c < num_colonne_sol:
+                righe_colonna = num_righe_sol + 1
+            else:
+                righe_colonna = num_righe_sol
             somma = 0
-            for r in range(0, num_righe_sol):
+            for r in range(0, righe_colonna):
                 somma += sol_parziale[r*n + c]
-            if somma != M:
+            if righe_colonna == n:      # colonna completa: deve fare esattamente M
+                if somma != M:
+                    return False
+            elif somma >= M:            # colonna incompleta: mancano numeri positivi, deve restare < M
                 return False
 
         # Somma delle diagonali
-        somma = 0
-        for r in range(0, num_righe_sol):
-            for c in range(0, num_colonne_sol):
-                somma += sol_parziale[r*n + c]
+        # CORRETTO: le diagonali si controllano solo a quadrato completo
+        if len(sol_parziale) == n*n:
+            somma = 0
+            for r in range(0, n):
+                somma += sol_parziale[r*n + r]
             if somma != M:
                 return False
 
-        somma = 0
-        for r in range(num_righe_sol, -1, -1):
-            for c in range(num_colonne_sol, -1, -1):
-                somma += sol_parziale[r * n + c]
+            somma = 0
+            for r in range(0, n):
+                somma += sol_parziale[r*n + (n-1-r)]
             if somma != M:
                 return False
 
@@ -96,16 +106,11 @@ class QuadratoMagico:
                     nuovi_rimanenti = copy.deepcopy(rimanenti)  # Attenzione alle liste, deepcopy perché è un'informazione nuova per il livello successivo
                     nuovi_rimanenti.remove(i)
                     self._ricorsione(sol_parziale, nuovi_rimanenti, n)
-                    sol_parziale.pop()
-
-
-
-
-
+                sol_parziale.pop() # CORRETTO: fuori dall'if, perché l'append lo faccio sempre
 
 
 if __name__ == '__main__':
     qm = QuadratoMagico()
-    soluzioni = qm.risolvi(4)
-    #print(soluzioni)
+    soluzioni = qm.risolvi(3)
+    print(soluzioni)
     print(qm._num_soluzioni)

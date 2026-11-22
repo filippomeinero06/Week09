@@ -77,5 +77,5 @@ class Dao:
 if __name__ == '__main__':
     #risultato = Dao.get_all_film()
     #print(risultato)
-    #print(Dao.read_statistiche(6))
+    print(Dao.read_statistiche(6))
     print(Dao.read_film_serata(3))

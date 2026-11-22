@@ -11,9 +11,9 @@ class Model:
         return Dao.read_statistiche(serate)
 
     def get_programma_ottimo(self, serate):
-        lista_film_serate = Dao.read_statistiche(serate)
-        for f in lista_film_serate:
-            print(f)
+        lista_film_serate = Dao.read_film_serata(serate)
+        '''for f in lista_film_serate:
+            print(f)'''
         # Qui dovrei determinare il programma ottimo usando serate e lista_film_serate: uso una strategia ricorsiva
 
         # Così ogni volta che chiamo la funzione riparto da capo (non sovrascrivo i dati)
@@ -62,19 +62,21 @@ class Model:
             if scelto.genere == film.genere:
                 occorrenze += 1
 
-        if occorrenze >= 2:
+        if occorrenze > 2:
             return False
 
         # 3) Vincoli che si possono fare alla fine di tutto
-        if len(parziale) + 1 == serate:
+        if len(parziale) + 1 == serate:     # Se il num di film già scelti  +  il film che sto per aggiungere è uguale al num di serate, allora ho campletato il programma
             num_commedie = 0
             generi_diversi = set()
 
+            # Qui controllo i film che ho già scelto nella soluzione parziale
             for scelto in parziale:
                 if scelto.genere == "Comedy":
                     num_commedie += 1
-                generi_diversi.add(scelto)
+                generi_diversi.add(scelto.genere)
 
+            # Qui controllo ancora il film che voglio aggiungere
             if film.genere == "Comedy":
                 num_commedie += 1
             generi_diversi.add(film.genere)
